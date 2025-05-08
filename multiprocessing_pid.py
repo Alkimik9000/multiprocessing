@@ -1,19 +1,16 @@
 import os
 import multiprocessing
 
-def childProcess(i):
-    print("Child PID is " + str(os.getpid()) + " and its parent PID is " + str(os.getppid()) + " | Value: " + str(i))
+def childProcess(number):
+    print("Child PID is " + str(os.getpid()) + " and its parent PID is " + str(os.getppid()))
+    for i in range(number + 1):
+        print("Child Process is printing: " + str(i) + " out of " + str(number))
 
 def main():
     number = int(input("Enter a number: "))
-    processes = []
-    for i in range(number + 1):
-        process = multiprocessing.Process(target=childProcess, args=(i,))
-        process.start()
-        processes.append(process)
-
-    for process in processes:
-        process.join()
+    process = multiprocessing.Process(target=childProcess, args=(number,))
+    process.start()
+    process.join()
 
     print("Parent PID is " + str(os.getpid()) + " and its parent PID is " + str(os.getppid()))
 
